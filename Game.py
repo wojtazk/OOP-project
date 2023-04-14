@@ -13,7 +13,7 @@ class BirdJumper:
     BG_IMG = pygame.image.load('images/Mountains_Loopable_56x31.png')
     BG_COLOR = 'lightblue'
 
-    BIRD_CHARACTER = Bird()
+    GAME_CHARACTER = Bird()
 
     counter = 0
 
@@ -52,13 +52,13 @@ class BirdJumper:
                 self.counter = 0
 
             # bird animation
-            if self.counter % self.BIRD_CHARACTER.animation_update_frequency == 0:
-                self.BIRD_CHARACTER.value += 1
-            if self.BIRD_CHARACTER.value >= len(self.BIRD_CHARACTER.sprite):
-                self.BIRD_CHARACTER.value = 0
+            if self.counter % self.GAME_CHARACTER.animation_update_frequency == 0:
+                self.GAME_CHARACTER.value += 1
+            if self.GAME_CHARACTER.value >= len(self.GAME_CHARACTER.sprite):
+                self.GAME_CHARACTER.value = 0
 
             # render bird
-            bird = self.BIRD_CHARACTER.sprite[self.BIRD_CHARACTER.value % len(self.BIRD_CHARACTER.sprite)]
+            bird = self.GAME_CHARACTER.sprite[self.GAME_CHARACTER.value % len(self.GAME_CHARACTER.sprite)]
             bird_rec = (bird.get_width() / 8, bird.get_height() / 8)
             bird = pygame.transform.scale(bird, bird_rec)
             screen.blit(bird, player_pos)
@@ -72,6 +72,11 @@ class BirdJumper:
                 player_pos.x -= 500 * dt
             if keys[pygame.K_d]:
                 player_pos.x += 500 * dt
+
+            # on space press -> jump
+            if keys[pygame.K_SPACE]:
+                player_pos.x += 10
+                player_pos.y -= 10
 
             # limit FPS
             # dt is delta time in seconds since last frame, used for frame-rate-independent physics.
