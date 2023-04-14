@@ -1,8 +1,9 @@
 import pygame
+
 from Bird import Bird
 
 
-class BirdJumper:
+class Controller:
     # config
     WIDTH = 1280 / 1.2
     HEIGHT = 720 / 1.2
@@ -14,15 +15,19 @@ class BirdJumper:
     BG_COLOR = 'lightblue'
 
     GAME_CHARACTER = Bird()
+    player_pos = None
 
     counter = 0
 
     def __init__(self):
-        # pygame setup
+        self.running = False
+        print('Hello world!')
+
+    def play(self):
+        self.running = True
+
         pygame.init()
-
         screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
-
         pygame.display.set_caption("Bird Jumper")
 
         pygame.display.set_icon(self.GAME_ICON)
@@ -31,7 +36,7 @@ class BirdJumper:
         running = True
         dt = 0  # delta time
 
-        player_pos = pygame.Vector2(screen.get_width() / 4, screen.get_height() / 2)
+        self.player_pos = pygame.Vector2(screen.get_width() / 4, screen.get_height() / 2)
 
         while running:
             # events
@@ -61,22 +66,22 @@ class BirdJumper:
             bird = self.GAME_CHARACTER.sprite[self.GAME_CHARACTER.value % len(self.GAME_CHARACTER.sprite)]
             bird_rec = (bird.get_width() / 8, bird.get_height() / 8)
             bird = pygame.transform.scale(bird, bird_rec)
-            screen.blit(bird, player_pos)
+            screen.blit(bird, self.player_pos)
 
             keys = pygame.key.get_pressed()
             if keys[pygame.K_w]:
-                player_pos.y -= 500 * dt
+                self.player_pos.y -= 500 * dt
             if keys[pygame.K_s]:
-                player_pos.y += 500 * dt
+                self.player_pos.y += 500 * dt
             if keys[pygame.K_a]:
-                player_pos.x -= 500 * dt
+                self.player_pos.x -= 500 * dt
             if keys[pygame.K_d]:
-                player_pos.x += 500 * dt
+                self.player_pos.x += 500 * dt
 
             # on space press -> jump
             if keys[pygame.K_SPACE]:
-                player_pos.x += 10
-                player_pos.y -= 10
+                self.player_pos.x += 10
+                self.player_pos.y -= 10
 
             # limit FPS
             # dt is delta time in seconds since last frame, used for frame-rate-independent physics.
@@ -86,3 +91,4 @@ class BirdJumper:
             pygame.display.update()
 
         pygame.quit()
+

@@ -9,7 +9,7 @@ class Bird:
         pygame.image.load('images/bird/frame-4.png'),
     ]
     animation_update_frequency = 5  # update every x frames
+    is_jumping = False
 
     def __init__(self):
         self.value = 0
-
