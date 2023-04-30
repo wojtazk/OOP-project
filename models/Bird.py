@@ -17,6 +17,8 @@ class Bird:
             pygame.image.load('images/bird/frame-3.png'),
             pygame.image.load('images/bird/frame-4.png'),
         ]
+        self.scale_animation_frames()
+
         self.animation_frame = 0  # no. of current frame being displayed
         self.ANIMATION_UPDATE_FREQUENCY = 4  # update every x frames
 
@@ -26,6 +28,12 @@ class Bird:
         self.JUMP_VELOCITY = 15
 
         self.velocity = 0
+
+    def scale_animation_frames(self):
+        i = 0
+        for frame in self.SPRITE:
+            self.SPRITE[i] = pygame.transform.scale(frame, (frame.get_width() / 8, frame.get_height() / 8))
+            i += 1
 
     def get_position(self):
         return pygame.Vector2(self.x, self.y)
@@ -37,8 +45,8 @@ class Bird:
 
     def draw(self, screen):
         bird = self.SPRITE[self.animation_frame]
-        bird_rec = (bird.get_width() / 8, bird.get_height() / 8)
-        bird = pygame.transform.scale(bird, bird_rec)
+        # bird_rec = (bird.get_width() / 8, bird.get_height() / 8)
+        # bird = pygame.transform.scale(bird, bird_rec)
 
         if self.is_jumping:
             self.y -= self.velocity  # move the bird up
