@@ -1,6 +1,8 @@
 import pygame
 
 from models.Bird import Bird
+from models.LowerPipe import LowerPipe
+from models.UpperPipe import UpperPipe
 
 
 class Controller:
@@ -32,7 +34,19 @@ class Controller:
         clock = pygame.time.Clock()
         dt = 0  # delta time
 
+        # player character
         self.PLAYER_CHARACTER = Bird(screen.get_width() / 4, screen.get_height() / 4, self.GRAVITY)
+
+        # pipes
+        test_pipe = LowerPipe(self.WIDTH - 400, self.HEIGHT, 200)
+        test_pipe2 = LowerPipe(self.WIDTH, self.HEIGHT, 250)
+        test_pipe3 = LowerPipe(self.WIDTH + 400, self.HEIGHT, 200)
+        test_pipe4 = LowerPipe(self.WIDTH + 800, self.HEIGHT, 450)
+
+        test_pipe_upper = UpperPipe(self.WIDTH - 400, 0, 200)
+        test_pipe_upper2 = UpperPipe(self.WIDTH, 0, 300)
+        test_pipe_upper3 = UpperPipe(self.WIDTH + 400, 0, 350)
+        test_pipe_upper4 = UpperPipe(self.WIDTH + 800, 0, 100)
 
         self.running = True
         while self.running:
@@ -63,6 +77,17 @@ class Controller:
 
             # render bird
             self.PLAYER_CHARACTER.draw(screen)
+
+            # render Pipes
+            test_pipe.draw(screen)
+            test_pipe2.draw(screen)
+            test_pipe3.draw(screen)
+            test_pipe4.draw(screen)
+
+            test_pipe_upper.draw(screen)
+            test_pipe_upper2.draw(screen)
+            test_pipe_upper3.draw(screen)
+            test_pipe_upper4.draw(screen)
 
             # keys = pygame.key.get_pressed()
             # if keys[pygame.K_w]:
