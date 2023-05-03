@@ -12,10 +12,10 @@ class Bird:
 
         # bird animation frames
         self.SPRITE = [
-            pygame.image.load('images/bird/frame-1.png'),
-            pygame.image.load('images/bird/frame-2.png'),
-            pygame.image.load('images/bird/frame-3.png'),
-            pygame.image.load('images/bird/frame-4.png'),
+            pygame.image.load('images/bird/frame-1.png').convert_alpha(),
+            pygame.image.load('images/bird/frame-2.png').convert_alpha(),
+            pygame.image.load('images/bird/frame-3.png').convert_alpha(),
+            pygame.image.load('images/bird/frame-4.png').convert_alpha(),
         ]
         self.scale_animation_frames()
 

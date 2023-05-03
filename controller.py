@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import DOUBLEBUF  # flag to enable double buffering
 
 from models.Bird import Bird
 from models.LowerPipe import LowerPipe
@@ -8,8 +9,8 @@ from models.UpperPipe import UpperPipe
 class Controller:
     def __init__(self):
         # config
-        self.WIDTH = 1280
-        self.HEIGHT = 720
+        self.WIDTH = 1280 / 1.3
+        self.HEIGHT = 720 / 1.3
 
         self.FPS_LIMIT = 60
         # make the gameplay consistent regardless of the resolution
@@ -27,9 +28,15 @@ class Controller:
 
     def play(self):
         pygame.init()
-        screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
-        pygame.display.set_caption("Bird Jumper")
+        screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT), DOUBLEBUF)
 
+        # performance improvements
+        screen.set_alpha(None)  # turn off alpha, it is not needed
+        self.BG_IMG = self.BG_IMG.convert_alpha()  # convert bg
+        self.GAME_ICON = self.GAME_ICON.convert_alpha()
+
+        # set window caption and icon
+        pygame.display.set_caption("Bird Jumper")
         pygame.display.set_icon(self.GAME_ICON)
 
         # game clock

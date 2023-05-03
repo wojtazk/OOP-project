@@ -10,8 +10,8 @@ class LowerPipe:
         self.y = y
 
         # load pipe's textures
-        self.pipe_mid = pygame.image.load('images/pipe/pipe_mid.png')
-        self.pipe_end = pygame.image.load('images/pipe/pipe_end.png')
+        self.pipe_mid = pygame.image.load('images/pipe/pipe_mid.png').convert_alpha()
+        self.pipe_end = pygame.image.load('images/pipe/pipe_end.png').convert_alpha()
 
         # scale pipe's textures
         pipe_mid_rec = (self.pipe_mid.get_width() / 2, height)  # scale to match the passed height
