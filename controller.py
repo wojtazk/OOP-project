@@ -4,6 +4,7 @@ from pygame.locals import DOUBLEBUF  # flag to enable double buffering
 from models.Bird import Bird
 from models.LowerPipe import LowerPipe
 from models.UpperPipe import UpperPipe
+from models.Pipe import Pipe
 
 
 class Controller:
@@ -22,6 +23,9 @@ class Controller:
         self.BG_COLOR = 'lightblue'
 
         self.PLAYER_CHARACTER = None
+
+        self.PIPE_GAP = 200
+        self.PIPE_SPACING = 300
 
         self.counter = 0
         self.running = False
@@ -47,15 +51,11 @@ class Controller:
         self.PLAYER_CHARACTER = Bird(screen.get_width() / 4, screen.get_height() / 4, self.GRAVITY)
 
         # pipes
-        test_pipe = LowerPipe(self.WIDTH - 400, self.HEIGHT, self.X_GRAVITY, 200)
-        test_pipe2 = LowerPipe(self.WIDTH, self.HEIGHT, self.X_GRAVITY, 250)
-        test_pipe3 = LowerPipe(self.WIDTH + 400, self.HEIGHT, self.X_GRAVITY, 200)
-        test_pipe4 = LowerPipe(self.WIDTH + 800, self.HEIGHT, self.X_GRAVITY, 450)
-
-        test_pipe_upper = UpperPipe(self.WIDTH - 400, 0, self.X_GRAVITY, 200)
-        test_pipe_upper2 = UpperPipe(self.WIDTH, 0, self.X_GRAVITY, 300)
-        test_pipe_upper3 = UpperPipe(self.WIDTH + 400, 0, self.X_GRAVITY, 350)
-        test_pipe_upper4 = UpperPipe(self.WIDTH + 800, 0, self.X_GRAVITY, 100)
+        # TODO: loop pipes
+        test_pipe_1 = Pipe(self.WIDTH - 300, self.HEIGHT, 200, self.X_GRAVITY)  # yeah, yeah self.PIPE_GAP - later
+        test_pipe_2 = Pipe(self.WIDTH, self.HEIGHT, 200, self.X_GRAVITY)
+        test_pipe_3 = Pipe(self.WIDTH + 300, self.HEIGHT, 200, self.X_GRAVITY)
+        test_pipe_4 = Pipe(self.WIDTH + 600, self.HEIGHT, 200, self.X_GRAVITY)
 
         self.running = True
         while self.running:
@@ -88,15 +88,10 @@ class Controller:
             self.PLAYER_CHARACTER.draw(screen)
 
             # render Pipes
-            test_pipe.draw(screen)
-            test_pipe2.draw(screen)
-            test_pipe3.draw(screen)
-            test_pipe4.draw(screen)
-
-            test_pipe_upper.draw(screen)
-            test_pipe_upper2.draw(screen)
-            test_pipe_upper3.draw(screen)
-            test_pipe_upper4.draw(screen)
+            test_pipe_1.draw(screen)
+            test_pipe_2.draw(screen)
+            test_pipe_3.draw(screen)
+            test_pipe_4.draw(screen)
 
             # keys = pygame.key.get_pressed()
             # if keys[pygame.K_w]:
