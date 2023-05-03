@@ -25,7 +25,7 @@ class Bird:
         self.rotation_multiplier = 1.5
 
         self.is_jumping = False
-        self.JUMP_VELOCITY = 15
+        self.JUMP_VELOCITY = self.GRAVITY * 15
 
         self.velocity = 0
 

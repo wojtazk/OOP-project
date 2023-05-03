@@ -1,11 +1,9 @@
-import pygame
-
 from models.LowerPipe import LowerPipe
 
 
 class UpperPipe(LowerPipe):
-    def __init__(self, x, y, height):
-        super().__init__(x, y, height)
+    def __init__(self, x, y, gravity, height):
+        super().__init__(x, y, gravity, height)
         self.y = y  # reset the adjustment made in LowerPipe (it is not needed here)
 
         # adjust the pipe end drawing pos (make it render on the bottom of the pipe)

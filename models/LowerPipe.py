@@ -2,7 +2,7 @@ import pygame
 
 
 class LowerPipe:
-    def __init__(self, x, y, height):
+    def __init__(self, x, y, gravity, height):
         self.height = height
 
         # set pipe's position
@@ -22,7 +22,7 @@ class LowerPipe:
         # adjust pipe's position (move it up basically)
         self.y = y - self.pipe_mid.get_height()
 
-        self.velocity = 5
+        self.velocity = gravity * 5
 
     def get_position(self):
         return pygame.Vector2(self.x, self.y)

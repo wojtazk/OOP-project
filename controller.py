@@ -12,7 +12,9 @@ class Controller:
         self.HEIGHT = 720
 
         self.FPS_LIMIT = 60
-        self.GRAVITY = 1
+        # make the gameplay consistent regardless of the resolution
+        self.GRAVITY = self.HEIGHT / 720
+        self.X_GRAVITY = self.WIDTH / 1280
 
         self.GAME_ICON = pygame.image.load('images/duck-ga9276d9c3_640.png')
         self.BG_IMG = pygame.image.load('images/Mountains_Loopable_56x31.png')
@@ -38,15 +40,15 @@ class Controller:
         self.PLAYER_CHARACTER = Bird(screen.get_width() / 4, screen.get_height() / 4, self.GRAVITY)
 
         # pipes
-        test_pipe = LowerPipe(self.WIDTH - 400, self.HEIGHT, 200)
-        test_pipe2 = LowerPipe(self.WIDTH, self.HEIGHT, 250)
-        test_pipe3 = LowerPipe(self.WIDTH + 400, self.HEIGHT, 200)
-        test_pipe4 = LowerPipe(self.WIDTH + 800, self.HEIGHT, 450)
+        test_pipe = LowerPipe(self.WIDTH - 400, self.HEIGHT, self.X_GRAVITY, 200)
+        test_pipe2 = LowerPipe(self.WIDTH, self.HEIGHT, self.X_GRAVITY, 250)
+        test_pipe3 = LowerPipe(self.WIDTH + 400, self.HEIGHT, self.X_GRAVITY, 200)
+        test_pipe4 = LowerPipe(self.WIDTH + 800, self.HEIGHT, self.X_GRAVITY, 450)
 
-        test_pipe_upper = UpperPipe(self.WIDTH - 400, 0, 200)
-        test_pipe_upper2 = UpperPipe(self.WIDTH, 0, 300)
-        test_pipe_upper3 = UpperPipe(self.WIDTH + 400, 0, 350)
-        test_pipe_upper4 = UpperPipe(self.WIDTH + 800, 0, 100)
+        test_pipe_upper = UpperPipe(self.WIDTH - 400, 0, self.X_GRAVITY, 200)
+        test_pipe_upper2 = UpperPipe(self.WIDTH, 0, self.X_GRAVITY, 300)
+        test_pipe_upper3 = UpperPipe(self.WIDTH + 400, 0, self.X_GRAVITY, 350)
+        test_pipe_upper4 = UpperPipe(self.WIDTH + 800, 0, self.X_GRAVITY, 100)
 
         self.running = True
         while self.running:
