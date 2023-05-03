@@ -9,7 +9,7 @@ class Pipe:
         self.height = window_height - gap
         self.gap = gap
 
-        self.upper_pipe_height = random.randint(100, int(self.height - 100))
+        self.upper_pipe_height = random.randint(50, int(self.height - 50))
         self.lower_pipe_height = self.height - self.upper_pipe_height
 
         self.upper_pipe = UpperPipe(x, 0, gravity, self.upper_pipe_height)
