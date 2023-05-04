@@ -2,7 +2,7 @@ import pygame
 
 
 class LowerPipe:
-    def __init__(self, x, y, gravity, height):
+    def __init__(self, x, y, gravity, height, pipe_mid, pipe_end):
         self.height = height
 
         # set pipe's position
@@ -10,14 +10,12 @@ class LowerPipe:
         self.y = y
 
         # load pipe's textures
-        self.pipe_mid = pygame.image.load('images/pipe/pipe_mid.png').convert_alpha()
-        self.pipe_end = pygame.image.load('images/pipe/pipe_end.png').convert_alpha()
+        self.pipe_mid = pipe_mid
+        self.pipe_end = pipe_end
 
-        # scale pipe's textures
-        pipe_mid_rec = (self.pipe_mid.get_width() / 2, height)  # scale to match the passed height
-        pipe_end_rec = (self.pipe_end.get_width() / 2, self.pipe_end.get_height() / 2)
+        # scale mid pipe's textures
+        pipe_mid_rec = (self.pipe_mid.get_width(), height)  # scale to match the passed height
         self.pipe_mid = pygame.transform.scale(self.pipe_mid, pipe_mid_rec)  # override with scaled texture
-        self.pipe_end = pygame.transform.scale(self.pipe_end, pipe_end_rec)  # override with scaled texture
 
         # adjust pipe's position (move it up basically)
         self.y = y - self.pipe_mid.get_height()

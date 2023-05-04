@@ -2,8 +2,8 @@ from models.LowerPipe import LowerPipe
 
 
 class UpperPipe(LowerPipe):
-    def __init__(self, x, y, gravity, height):
-        super().__init__(x, y, gravity, height)
+    def __init__(self, x, y, gravity, height, pipe_mid, pipe_end):
+        super().__init__(x, y, gravity, height, pipe_mid, pipe_end)
         self.y = y  # reset the adjustment made in LowerPipe (it is not needed here)
 
         # adjust the pipe end drawing pos (make it render on the bottom of the pipe)
