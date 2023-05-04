@@ -21,9 +21,11 @@ class Controller:
         self.BG_COLOR = 'lightblue'
 
         self.PLAYER_CHARACTER = None
+        self.PIPES_ARRAY = None
 
         self.PIPE_GAP = 200
         self.PIPE_SPACING = 300
+        self.pipe_total_width = None
 
         self.counter = 0
         self.running = False
@@ -48,12 +50,9 @@ class Controller:
         # player character
         self.PLAYER_CHARACTER = Bird(screen.get_width() / 4, screen.get_height() / 4, self.GRAVITY)
 
-        # pipes
-        # TODO: loop pipes
-        test_pipe_1 = Pipe(self.WIDTH - 300, self.HEIGHT, 200, self.X_GRAVITY)  # yeah, yeah self.PIPE_GAP - later
-        test_pipe_2 = Pipe(self.WIDTH, self.HEIGHT, 200, self.X_GRAVITY)
-        test_pipe_3 = Pipe(self.WIDTH + 300, self.HEIGHT, 200, self.X_GRAVITY)
-        test_pipe_4 = Pipe(self.WIDTH + 600, self.HEIGHT, 200, self.X_GRAVITY)
+        # pipes setup
+        self.PIPES_ARRAY = self.generate_pipes()
+        last_pipe = self.PIPES_ARRAY[-1]
 
         self.running = True
         while self.running:
@@ -86,10 +85,12 @@ class Controller:
             self.PLAYER_CHARACTER.draw(screen)
 
             # render Pipes
-            test_pipe_1.draw(screen)
-            test_pipe_2.draw(screen)
-            test_pipe_3.draw(screen)
-            test_pipe_4.draw(screen)
+            for pipe in self.PIPES_ARRAY:
+                if pipe.is_visible():
+                    pipe.draw(screen)
+                else:
+                    pipe.recycle(last_pipe.get_x() + self.pipe_total_width)
+                    last_pipe = pipe
 
             # keys = pygame.key.get_pressed()
             # if keys[pygame.K_w]:
@@ -109,3 +110,21 @@ class Controller:
             pygame.display.update()
 
         pygame.quit()
+
+    def generate_pipes(self):
+        pipe_width = pygame.image.load('images/pipe/pipe_end.png').get_width() / 2
+        pipe_total_width = pipe_width + self.PIPE_SPACING
+
+        self.pipe_total_width = pipe_total_width
+
+        pipes_needed = int(self.WIDTH // pipe_total_width) + 1  # + 1 for extra pipe
+
+        pipes = []
+        current_pipe_position = self.WIDTH
+        for i in range(pipes_needed):
+            new_pipe = Pipe(current_pipe_position, self.HEIGHT, self.PIPE_GAP, self.X_GRAVITY)
+            current_pipe_position += pipe_total_width
+
+            pipes.append(new_pipe)
+
+        return pipes

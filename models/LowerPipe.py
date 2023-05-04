@@ -33,6 +33,12 @@ class LowerPipe:
     def get_width(self):
         return self.pipe_end.get_width()
 
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
     def draw(self, screen):
         self.x -= self.velocity  # subtract velocity from x coordinate to make the pipe move
 
