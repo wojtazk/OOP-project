@@ -2,8 +2,6 @@ import pygame
 from pygame.locals import DOUBLEBUF  # flag to enable double buffering
 
 from models.Bird import Bird
-from models.LowerPipe import LowerPipe
-from models.UpperPipe import UpperPipe
 from models.Pipe import Pipe
 
 
