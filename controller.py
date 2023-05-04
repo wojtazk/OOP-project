@@ -112,7 +112,7 @@ class Controller:
         pygame.quit()
 
     def generate_pipes(self):
-        pipe_width = pygame.image.load('images/pipe/pipe_end.png').get_width() / 2
+        pipe_width = Pipe(0, 1000, 0, 0).get_width()
         pipe_total_width = pipe_width + self.PIPE_SPACING
 
         self.pipe_total_width = pipe_total_width
@@ -120,10 +120,10 @@ class Controller:
         pipes_needed = int(self.WIDTH // pipe_total_width) + 1  # + 1 for extra pipe
 
         pipes = []
-        current_pipe_position = self.WIDTH
+        new_pipe_position = self.WIDTH
         for i in range(pipes_needed):
-            new_pipe = Pipe(current_pipe_position, self.HEIGHT, self.PIPE_GAP, self.X_GRAVITY)
-            current_pipe_position += pipe_total_width
+            new_pipe = Pipe(new_pipe_position, self.HEIGHT, self.PIPE_GAP, self.X_GRAVITY)
+            new_pipe_position += pipe_total_width
 
             pipes.append(new_pipe)
 

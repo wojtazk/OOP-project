@@ -38,7 +38,7 @@ class Pipe:
         self.lower_pipe.draw(screen)
 
     def get_width(self):
-        return self.upper_pipe.get_width()
+        return self.pipe_end_texture.get_width()
 
     def is_visible(self):
         return self.upper_pipe.get_position().x + self.upper_pipe.get_width() > 0
