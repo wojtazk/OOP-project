@@ -97,16 +97,6 @@ class Controller:
                     pipe.recycle(last_pipe.get_x() + self.pipe_total_width)
                     last_pipe = pipe
 
-            # keys = pygame.key.get_pressed()
-            # if keys[pygame.K_w]:
-            #     self.player_pos.y -= 500 * dt
-            # if keys[pygame.K_s]:
-            #     self.player_pos.y += 500 * dt
-            # if keys[pygame.K_a]:
-            #     self.player_pos.x -= 500 * dt
-            # if keys[pygame.K_d]:
-            #     self.player_pos.x += 500 * dt
-
             # limit FPS
             # dt is delta time in seconds since last frame, used for frame-rate-independent physics.
             dt = clock.tick(self.FPS_LIMIT) / 1000  # divide by 1000 to convert to seconds
