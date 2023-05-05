@@ -67,6 +67,11 @@ class Controller:
                     if event.key in [pygame.K_SPACE, pygame.K_UP, pygame.K_w]:
                         self.PLAYER_CHARACTER.jump()
 
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    # on mouse left click -> jump
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.PLAYER_CHARACTER.jump()
+
             # background
             background = pygame.transform.scale(self.BG_IMG, (self.WIDTH, self.HEIGHT))
             screen.fill(self.BG_COLOR)
