@@ -25,6 +25,12 @@ class LowerPipe:
     def get_position(self):
         return pygame.Vector2(self.x, self.y)
 
+    def get_masks(self):
+        return [
+            pygame.mask.from_surface(self.pipe_mid),
+            pygame.mask.from_surface(self.pipe_end)
+        ]
+
     def get_height(self):
         return self.height
 
@@ -40,5 +46,5 @@ class LowerPipe:
     def draw(self, screen):
         self.x -= self.velocity  # subtract velocity from x coordinate to make the pipe move
 
-        screen.blit(self.pipe_mid, self.get_position())
+        screen.blit(self.pipe_mid, self.get_position())  # FIXME: 2x self.get_position()
         screen.blit(self.pipe_end, self.get_position())

@@ -40,6 +40,18 @@ class Pipe:
     def get_width(self):
         return self.pipe_end_texture.get_width()
 
+    def get_positions(self):
+        return {
+            'upper_pipe': self.upper_pipe.get_position(),
+            'lower_pipe': self.lower_pipe.get_position()
+        }
+
+    def get_masks(self):
+        return {
+            'upper_pipe': self.upper_pipe.get_masks(),
+            'lower_pipe': self.lower_pipe.get_masks()
+        }
+
     def is_visible(self):
         return self.upper_pipe.get_position().x + self.upper_pipe.get_width() > 0
 

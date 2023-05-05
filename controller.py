@@ -97,6 +97,12 @@ class Controller:
                     pipe.recycle(last_pipe.get_x() + self.pipe_total_width)
                     last_pipe = pipe
 
+                # checking for collisions with player_character
+                if self.check_for_collision(pipe):
+                    # print warning to the console
+                    print("\033[91m {}\033[00m".format(f'collision {pipe.get_positions()}'))
+                    print()
+
             # limit FPS
             # dt is delta time in seconds since last frame, used for frame-rate-independent physics.
             dt = clock.tick(self.FPS_LIMIT) / 1000  # divide by 1000 to convert to seconds
@@ -123,3 +129,32 @@ class Controller:
             pipes.append(new_pipe)
 
         return pipes
+
+    def check_for_collision(self, pipe):
+        pipe_pos_dict = pipe.get_positions()  # {'upper_pipe': <Vector2(x, y)>, 'lower_pipe': <Vector2(x, y)>}
+        pipe_mask_dict = pipe.get_masks()  # {'upper_pipe': [<Mask(pipe_mid)>, <Mask(pipe_end)>], 'lower_pipe': ...]}
+
+        upper_pipe_pos = pipe_pos_dict['upper_pipe']  # <Vector2(x, y)>
+        upper_pipe_mask = pipe_mask_dict['upper_pipe']  # [<Mask(pipe_mid)>, <Mask(pipe_end)>]
+
+        lower_pipe_pos = pipe_pos_dict['lower_pipe']
+        lower_pipe_mask = pipe_mask_dict['lower_pipe']
+
+        bird_pos = self.PLAYER_CHARACTER.get_position()
+        bird_mask = self.PLAYER_CHARACTER.get_mask()
+
+        # check for collisions with upper pipe
+        offset = (upper_pipe_pos.x - bird_pos.x, upper_pipe_pos.y - bird_pos.y)  # offset between pipe's part and bird
+        if bird_mask.overlap(upper_pipe_mask[0], offset):
+            return True  # collision
+        if bird_mask.overlap(upper_pipe_mask[1], offset):
+            return True
+
+        # check for collisions with lower pipe
+        offset = (lower_pipe_pos.x - bird_pos.x, lower_pipe_pos.y - bird_pos.y)
+        if bird_mask.overlap(lower_pipe_mask[0], offset):
+            return True
+        if bird_mask.overlap(lower_pipe_mask[1], offset):
+            return True
+
+        return False  # no collisions
