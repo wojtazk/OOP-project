@@ -15,7 +15,7 @@ This project uses [pygame](https://www.pygame.org/news) (cross-platform set of P
 ![image](https://user-images.githubusercontent.com/48928433/226203592-3beea120-9233-46dc-bb2f-39da9fa5ae79.png)
 ---
 
-Assets used in this project -> [./images.txt](./assets.txt)  
+Assets used in this project -> [./assets.txt](./assets.txt)  
 The assets used in this project are under their providers licences
   
 </div>
