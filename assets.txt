@@ -2,3 +2,5 @@ game icon -> https://pixabay.com/illustrations/duck-icon-duck-icon-mallard-bird-
 bg (CC 0) -> https://opengameart.org/content/pixel-art-backgrounds-0
 bird (game character) (CC 0) -> https://opengameart.org/content/bevouliin-free-vector-sprite-sheets-flappy-bird-with-hat
 pipe (purzen at Openclipart.org, CC0, via Wikimedia Commons) -> https://commons.wikimedia.org/wiki/File:Mario_pipe.png
+
+font (Open Font License) -> https://fonts.google.com/specimen/Press+Start+2P

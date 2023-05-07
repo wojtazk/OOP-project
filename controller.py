@@ -4,6 +4,7 @@ from pygame.locals import DOUBLEBUF  # flag to enable double buffering
 from View import View
 from models.Bird import Bird
 from models.Pipe import Pipe
+from models.Score import Score
 
 
 class Controller:
@@ -32,6 +33,10 @@ class Controller:
         self.PIPE_GAP = 250
         self.PIPE_SPACING = 300
         self.pipe_total_width = None
+
+        self.SCORE = None
+        self.SCORE_FONT_SIZE = 30
+        self.SCORE_MARGIN = 15
 
         self.counter = 0
         self.running = False
@@ -92,12 +97,19 @@ class Controller:
                     pipe.recycle(self.last_pipe.get_x() + self.pipe_total_width)
                     self.last_pipe = pipe
 
+                    # increment score
+                    self.SCORE.increment()
+
                 # checking for collisions with player_character
                 if self.PLAYER_CHARACTER.check_for_collision(pipe):
                     # print warning to the console
                     print("\033[91m {}\033[00m".format(f'collision {pipe.get_positions()}'))
+                    print("\033[94m {}\033[00m".format(f'your score: {self.SCORE.get_score()}'))
                     print()
                     self.restart()
+
+            # render score
+            self.SCORE.draw(window)
 
             # limit FPS
             # dt is delta time in seconds since last frame, used for frame-rate-independent physics.
@@ -132,6 +144,9 @@ class Controller:
         # pipes setup
         self.PIPES_ARRAY = self.generate_pipes()
         self.last_pipe = self.PIPES_ARRAY[-1]
+
+        # score
+        self.SCORE = Score(self.SCORE_FONT_SIZE, self.SCORE_MARGIN)
 
     def handle_events(self):
         # pygame.QUIT event => the user clicked X
