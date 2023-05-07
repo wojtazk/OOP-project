@@ -1,3 +1,4 @@
-from Game import BirdJumper
+from controller import Controller
 
-BirdJumper()
+game_controller = Controller()
+game_controller.play()
