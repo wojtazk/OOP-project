@@ -10,8 +10,8 @@ class Bird:
         # set the gravity constant
         self.GRAVITY = gravity
 
-        # initialize bird (latest rendered frame)
-        self.bird = None
+        # initialize bird
+        self.bird = None  # (the latest rendered frame)
         self.bird_rotation = None
 
         # bird animation frames
@@ -73,8 +73,43 @@ class Bird:
         # draw the bird on the screen
         screen.blit(self.bird, self.get_position())
 
+    def draw_static(self, screen):  # -> when game is paused
+        screen.blit(self.SPRITE[self.animation_frame], self.get_position())
+
     def animate_wings(self, counter):
         if counter % self.ANIMATION_UPDATE_FREQUENCY == 0:
             self.animation_frame += 1
         if self.animation_frame >= len(self.SPRITE):
             self.animation_frame = 0
+
+    def check_for_collision(self, pipe):
+        if not self.bird or not pipe:  # guard clause
+            return False
+
+        pipe_pos_dict = pipe.get_positions()  # {'upper_pipe': <Vector2(x, y)>, 'lower_pipe': <Vector2(x, y)>}
+        pipe_mask_dict = pipe.get_masks()  # {'upper_pipe': [<Mask(pipe_mid)>, <Mask(pipe_end)>], 'lower_pipe': ...]}
+
+        upper_pipe_pos = pipe_pos_dict['upper_pipe']  # <Vector2(x, y)>
+        upper_pipe_mask = pipe_mask_dict['upper_pipe']  # [<Mask(pipe_mid)>, <Mask(pipe_end)>]
+
+        lower_pipe_pos = pipe_pos_dict['lower_pipe']
+        lower_pipe_mask = pipe_mask_dict['lower_pipe']
+
+        bird_pos = self.get_position()
+        bird_mask = self.get_mask()
+
+        # check for collisions with upper pipe
+        offset = (upper_pipe_pos.x - bird_pos.x, upper_pipe_pos.y - bird_pos.y)  # offset between pipe's part and bird
+        if bird_mask.overlap(upper_pipe_mask[0], offset):
+            return True  # collision
+        if bird_mask.overlap(upper_pipe_mask[1], offset):
+            return True
+
+        # check for collisions with lower pipe
+        offset = (lower_pipe_pos.x - bird_pos.x, lower_pipe_pos.y - bird_pos.y)
+        if bird_mask.overlap(lower_pipe_mask[0], offset):
+            return True
+        if bird_mask.overlap(lower_pipe_mask[1], offset):
+            return True
+
+        return False  # no collisions
