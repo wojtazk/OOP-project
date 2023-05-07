@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import DOUBLEBUF  # flag to enable double buffering
 
+from View import View
 from models.Bird import Bird
 from models.Pipe import Pipe
 
@@ -17,6 +18,7 @@ class Controller:
         self.GRAVITY = 1
         self.X_GRAVITY = 1
 
+        self.CAPTION = "Bird Jumper"
         self.GAME_ICON = pygame.image.load('images/duck-ga9276d9c3_640.png')
         # noinspection SpellCheckingInspection
         self.BG_IMG = pygame.image.load('images/Mountains_Loopable_56x31.png')
@@ -38,16 +40,13 @@ class Controller:
 
     def play(self):
         pygame.init()
-        window = pygame.display.set_mode((self.WIDTH, self.HEIGHT), DOUBLEBUF)
 
-        # performance improvements
-        window.set_alpha(None)  # turn off alpha, it is not needed
+        # initialize view
+        flags = DOUBLEBUF
+        view = View(self.WIDTH, self.HEIGHT, flags, self.CAPTION, self.GAME_ICON, None)
+        window = view.get_window()  # get window
+
         self.BG_IMG = self.BG_IMG.convert_alpha()  # convert bg
-        self.GAME_ICON = self.GAME_ICON.convert_alpha()
-
-        # set window caption and icon
-        pygame.display.set_caption("Bird Jumper")
-        pygame.display.set_icon(self.GAME_ICON)
 
         # game clock
         clock = pygame.time.Clock()
