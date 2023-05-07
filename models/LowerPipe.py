@@ -43,8 +43,9 @@ class LowerPipe:
     def get_y(self):
         return self.y
 
-    def draw(self, screen):
+    def draw(self, window):
         self.x -= self.velocity  # subtract velocity from x coordinate to make the pipe move
 
-        screen.blit(self.pipe_mid, self.get_position())  # FIXME: 2x self.get_position()
-        screen.blit(self.pipe_end, self.get_position())
+        pos = self.get_position()
+        window.blit(self.pipe_mid, pos)
+        window.blit(self.pipe_end, pos)

@@ -38,10 +38,10 @@ class Controller:
 
     def play(self):
         pygame.init()
-        screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT), DOUBLEBUF)
+        window = pygame.display.set_mode((self.WIDTH, self.HEIGHT), DOUBLEBUF)
 
         # performance improvements
-        screen.set_alpha(None)  # turn off alpha, it is not needed
+        window.set_alpha(None)  # turn off alpha, it is not needed
         self.BG_IMG = self.BG_IMG.convert_alpha()  # convert bg
         self.GAME_ICON = self.GAME_ICON.convert_alpha()
 
@@ -67,12 +67,12 @@ class Controller:
                 continue
 
             # background
-            screen.fill(self.BG_COLOR)
-            screen.blit(self.background, (0, 0))
+            window.fill(self.BG_COLOR)
+            window.blit(self.background, (0, 0))
 
             # continue if the game is paused
             if self.is_paused:
-                self.PLAYER_CHARACTER.draw_static(screen)
+                self.PLAYER_CHARACTER.draw_static(window)
                 pygame.display.update()
                 continue
 
@@ -83,12 +83,12 @@ class Controller:
             self.PLAYER_CHARACTER.animate_wings(self.counter)
 
             # render bird
-            self.PLAYER_CHARACTER.draw(screen)
+            self.PLAYER_CHARACTER.draw(window)
 
             # render Pipes
             for pipe in self.PIPES_ARRAY:
                 if pipe.is_visible():
-                    pipe.draw(screen)
+                    pipe.draw(window)
                 else:
                     pipe.recycle(self.last_pipe.get_x() + self.pipe_total_width)
                     self.last_pipe = pipe

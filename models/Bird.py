@@ -50,7 +50,7 @@ class Bird:
         self.velocity = self.JUMP_VELOCITY  # set the velocity to jump height so the bird goes up (positive velocity)
         self.rotation_multiplier = 2.8  # it will make the bird rotate more, while jumping
 
-    def draw(self, screen):
+    def draw(self, window):
         self.bird = self.SPRITE[self.animation_frame]
         # bird_rec = (bird.get_width() / 8, bird.get_height() / 8)
         # bird = pygame.transform.scale(bird, bird_rec)
@@ -70,11 +70,11 @@ class Bird:
         self.bird_rotation = self.velocity * self.rotation_multiplier  # calculate bird's rotation
         self.bird = pygame.transform.rotate(self.bird, self.bird_rotation)
 
-        # draw the bird on the screen
-        screen.blit(self.bird, self.get_position())
+        # draw the bird on the window
+        window.blit(self.bird, self.get_position())
 
-    def draw_static(self, screen):  # -> when game is paused
-        screen.blit(self.SPRITE[self.animation_frame], self.get_position())
+    def draw_static(self, window):  # -> when game is paused
+        window.blit(self.SPRITE[self.animation_frame], self.get_position())
 
     def animate_wings(self, counter):
         if counter % self.ANIMATION_UPDATE_FREQUENCY == 0:
