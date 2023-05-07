@@ -12,9 +12,10 @@ class Controller:
         self.HEIGHT = 720 / 1.3
 
         self.FPS_LIMIT = 60
+
         # make the gameplay consistent regardless of the resolution
-        self.GRAVITY = self.HEIGHT / 720
-        self.X_GRAVITY = self.WIDTH / 1280
+        self.GRAVITY = 1
+        self.X_GRAVITY = 1
 
         self.GAME_ICON = pygame.image.load('images/duck-ga9276d9c3_640.png')
         self.BG_IMG = pygame.image.load('images/Mountains_Loopable_56x31.png')
@@ -23,7 +24,7 @@ class Controller:
         self.PLAYER_CHARACTER = None
         self.PIPES_ARRAY = None
 
-        self.PIPE_GAP = 200
+        self.PIPE_GAP = 250
         self.PIPE_SPACING = 300
         self.pipe_total_width = None
 
