@@ -136,8 +136,6 @@ class Controller:
         if pygame.get_init():  # True if pygame is currently initialized
             pygame.quit()
 
-        quit()
-
     def initialize_assets(self):
         # background
         self.background = pygame.transform.scale(self.BG_IMG, (self.WIDTH, self.HEIGHT))
