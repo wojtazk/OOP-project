@@ -15,7 +15,7 @@ class Controller:
 
         self.FPS_LIMIT = 60
 
-        # make the gameplay consistent regardless of the resolution
+        # gravity
         self.GRAVITY = 1
         self.X_GRAVITY = 1
 
