@@ -1,4 +1,5 @@
 import pygame
+import sys
 from pygame.locals import DOUBLEBUF  # flag to enable double buffering
 
 from View import View
@@ -135,6 +136,8 @@ class Controller:
     def quit():
         if pygame.get_init():  # True if pygame is currently initialized
             pygame.quit()
+
+        sys.exit()
 
     def initialize_assets(self):
         # background
