@@ -113,3 +113,11 @@ class Bird:
             return True
 
         return False  # no collisions
+
+    def is_out_of_bounds(self, window_height):
+        bird_height = self.SPRITE[0].get_height() + 100
+
+        lower_boundary = window_height - bird_height - 200
+        upper_boundary = 0 - bird_height - 50
+
+        return self.y > lower_boundary or self.y < upper_boundary

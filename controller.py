@@ -108,6 +108,10 @@ class Controller:
                     print()
                     self.restart()
 
+            # restart if the bird is out of screen
+            if self.PLAYER_CHARACTER.is_out_of_bounds(self.WIDTH):
+                self.restart()
+
             # render score
             self.SCORE.draw(window)
 
