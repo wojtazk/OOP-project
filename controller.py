@@ -100,9 +100,9 @@ class Controller:
                     self.last_pipe = pipe
 
                     # increment score
-                    # self.SCORE.increment()
+                    self.SCORE.increment()
                     # noinspection PyStatementEffect
-                    self.SCORE + 1
+                    # self.SCORE + 1
 
                 # checking for collisions with player_character
                 if self.PLAYER_CHARACTER.check_for_collision(pipe):
