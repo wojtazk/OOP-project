@@ -8,6 +8,10 @@ class Score:
         self.font = pygame.font.Font('fonts/PressStart2P/PressStart2P-Regular.ttf', font_size)
         self.score_surface = None
 
+    # + operator overloading
+    def __add__(self, value):
+        self.value += value
+
     def draw(self, window):
         self.score_surface = self.font.render(str(self.value), True, 'black')
 

@@ -4,7 +4,7 @@ from pygame.locals import DOUBLEBUF  # flag to enable double buffering
 
 from View import View
 from models.Bird import Bird
-from models.Pipe import Pipe
+from models.PipeGenerator import PipeGenerator
 from models.Score import Score
 
 
@@ -61,6 +61,7 @@ class Controller:
 
         # initialize player_character, pipes and background
         self.initialize_assets()
+        self.SCORE = Score(self.SCORE_FONT_SIZE, self.SCORE_MARGIN)
 
         self.running = True
         while self.running:
@@ -100,6 +101,8 @@ class Controller:
 
                     # increment score
                     self.SCORE.increment()
+                    # noinspection PyStatementEffect
+                    # self.SCORE + 1
 
                 # checking for collisions with player_character
                 if self.PLAYER_CHARACTER.check_for_collision(pipe):
@@ -151,7 +154,7 @@ class Controller:
         self.last_pipe = self.PIPES_ARRAY[-1]
 
         # score
-        self.SCORE = Score(self.SCORE_FONT_SIZE, self.SCORE_MARGIN)
+        # self.SCORE = Score(self.SCORE_FONT_SIZE, self.SCORE_MARGIN)
 
     def handle_events(self):
         # pygame.QUIT event => the user clicked X
@@ -165,6 +168,9 @@ class Controller:
                 # on [space, w, arrow_up] press -> jump
                 if event.key in [pygame.K_SPACE, pygame.K_UP, pygame.K_w]:
                     self.PLAYER_CHARACTER.jump()
+
+                    if self.game_over:
+                        self.SCORE.reset()
 
                     if self.is_paused or self.game_over:
                         self.is_paused = False
@@ -182,6 +188,9 @@ class Controller:
                 if event.button == pygame.BUTTON_LEFT:
                     self.PLAYER_CHARACTER.jump()
 
+                    if self.game_over:
+                        self.SCORE.reset()
+
                     if self.is_paused or self.game_over:
                         self.is_paused = False
                         self.game_over = False
@@ -194,7 +203,7 @@ class Controller:
             self.counter = 0
 
     def generate_pipes(self):
-        pipe_width = Pipe(0, 1000, 0, 0).get_width()
+        pipe_width = PipeGenerator(0, 1000, 0, 0).get_width()
         pipe_total_width = pipe_width + self.PIPE_SPACING
 
         self.pipe_total_width = pipe_total_width
@@ -204,7 +213,7 @@ class Controller:
         pipes = []
         new_pipe_position = self.WIDTH
         for i in range(pipes_needed):
-            new_pipe = Pipe(new_pipe_position, self.HEIGHT, self.PIPE_GAP, self.X_GRAVITY)
+            new_pipe = PipeGenerator(new_pipe_position, self.HEIGHT, self.PIPE_GAP, self.X_GRAVITY)
             new_pipe_position += pipe_total_width
 
             pipes.append(new_pipe)
