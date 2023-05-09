@@ -1,68 +1,48 @@
 import pygame
-import random
-
-from models.LowerPipe import LowerPipe
-from models.UpperPipe import UpperPipe
 
 
 class Pipe:
-    # load pipes textures
-    pipe_mid_texture = pygame.image.load('images/pipe/pipe_mid.png')
-    pipe_end_texture = pygame.image.load('images/pipe/pipe_end.png')
+    def __init__(self, x, y, gravity, height, pipe_mid, pipe_end):
+        self.height = height
 
-    # scale pipe's textures
-    pipe_mid_rec = (pipe_mid_texture.get_width() / 2, pipe_mid_texture.get_height())
-    pipe_end_rec = (pipe_end_texture.get_width() / 2, pipe_end_texture.get_height() / 2)
+        # set pipe's position
+        self.x = x
+        self.y = y
 
-    pipe_mid_texture = pygame.transform.scale(pipe_mid_texture, pipe_mid_rec)  # override with scaled texture
-    pipe_end_texture = pygame.transform.scale(pipe_end_texture, pipe_end_rec)  # override with scaled texture
+        # load pipe's textures
+        self.pipe_mid = pipe_mid
+        self.pipe_end = pipe_end
 
-    def __init__(self, x, window_height, gap, gravity):
-        self.height = window_height - gap
-        self.gap = gap
-        self.gravity = gravity
+        # scale mid pipe's textures
+        pipe_mid_rec = (self.pipe_mid.get_width(), height)  # scale to match the passed height
+        self.pipe_mid = pygame.transform.scale(self.pipe_mid, pipe_mid_rec)  # override with scaled texture
 
-        #  make textures render ready
-        self.pipe_mid_texture = self.pipe_mid_texture.convert_alpha()
-        self.pipe_end_texture = self.pipe_end_texture.convert_alpha()
+        self.velocity = gravity * 5
 
-        self.upper_pipe_height = random.randint(50, int(self.height - 50))
-        self.lower_pipe_height = self.height - self.upper_pipe_height
-
-        self.upper_pipe = UpperPipe(x, 0, gravity, self.upper_pipe_height, self.pipe_mid_texture, self.pipe_end_texture)
-        self.lower_pipe = LowerPipe(x, window_height, gravity, self.lower_pipe_height,
-                                    self.pipe_mid_texture, self.pipe_end_texture)
-
-    def draw(self, screen):
-        self.upper_pipe.draw(screen)
-        self.lower_pipe.draw(screen)
-
-    def get_width(self):
-        return self.pipe_end_texture.get_width()
-
-    def get_positions(self):
-        return {
-            'upper_pipe': self.upper_pipe.get_position(),
-            'lower_pipe': self.lower_pipe.get_position()
-        }
+    def get_position(self):
+        return pygame.Vector2(self.x, self.y)
 
     def get_masks(self):
-        return {
-            'upper_pipe': self.upper_pipe.get_masks(),
-            'lower_pipe': self.lower_pipe.get_masks()
-        }
+        return [
+            pygame.mask.from_surface(self.pipe_mid),
+            pygame.mask.from_surface(self.pipe_end)
+        ]
 
-    def is_visible(self):
-        return self.upper_pipe.get_position().x + self.upper_pipe.get_width() > 0
+    def get_height(self):
+        return self.height
+
+    def get_width(self):
+        return self.pipe_end.get_width()
 
     def get_x(self):
-        return self.upper_pipe.get_x()
+        return self.x
 
-    def recycle(self, x):
-        self.upper_pipe_height = random.randint(50, int(self.height - 50))
-        self.lower_pipe_height = self.height - self.upper_pipe_height
+    def get_y(self):
+        return self.y
 
-        self.upper_pipe = UpperPipe(x, 0, self.gravity, self.upper_pipe_height,
-                                    self.pipe_mid_texture, self.pipe_end_texture)
-        self.lower_pipe = LowerPipe(x, self.height + self.gap, self.gravity, self.lower_pipe_height,
-                                    self.pipe_mid_texture, self.pipe_end_texture)
+    def draw(self, window):
+        self.x -= self.velocity  # subtract velocity from x coordinate to make the pipe move
+
+        pos = self.get_position()
+        window.blit(self.pipe_mid, pos)
+        window.blit(self.pipe_end, pos)
