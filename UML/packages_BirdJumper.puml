@@ -1,0 +1,32 @@
+@startuml packages_BirdJumper
+set namespaceSeparator none
+package "View" as View {
+}
+package "controller" as controller {
+}
+package "export_to_exe" as export_to_exe {
+}
+package "main" as main {
+}
+package "models.Bird" as models.Bird {
+}
+package "models.LowerPipe" as models.LowerPipe {
+}
+package "models.Pipe" as models.Pipe {
+}
+package "models.PipeGenerator" as models.PipeGenerator {
+}
+package "models.Score" as models.Score {
+}
+package "models.UpperPipe" as models.UpperPipe {
+}
+controller --> View
+controller --> models.Bird
+controller --> models.PipeGenerator
+controller --> models.Score
+main --> controller
+models.LowerPipe --> models.Pipe
+models.PipeGenerator --> models.LowerPipe
+models.PipeGenerator --> models.UpperPipe
+models.UpperPipe --> models.Pipe
+@enduml

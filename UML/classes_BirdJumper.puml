@@ -1,0 +1,130 @@
+@startuml classes_BirdJumper
+!theme plain
+skinparam classAttributeIconSize 0
+
+set namespaceSeparator none
+class "Bird" as models.Bird.Bird {
+  +ANIMATION_UPDATE_FREQUENCY : int
+  +GRAVITY : int
+  +JUMP_VELOCITY : int
+  +SPRITE : list
+  +animation_frame : int
+  +bird : img
+  +bird_rotation : float, NoneType
+  +is_jumping : bool
+  +rotation_multiplier : float
+  +velocity : int
+  +x : int
+  +y : int
+  +animate_wings(counter)
+  +check_for_collision(pipe)
+  +draw(window)
+  +draw_static(window)
+  +get_mask()
+  +get_position()
+  +is_out_of_bounds(window_height)
+  +jump()
+  +scale_animation_frames()
+}
+class "Controller" as controller.Controller {
+  +BG_COLOR : str
+  +BG_IMG : img
+  +CAPTION : str
+  +FPS_LIMIT : int
+  +GAME_ICON : img
+  +GRAVITY : int
+  +HEIGHT : float
+  +PIPES_ARRAY : NoneType, list
+  +PIPE_GAP : int
+  +PIPE_SPACING : int
+  +PLAYER_CHARACTER : Bird
+  +SCORE : SCORE
+  +SCORE_FONT_SIZE : int
+  +SCORE_MARGIN : int
+  +VIEW : View
+  +WIDTH : float
+  +X_GRAVITY : int
+  +background : img
+  +counter : int
+  +game_over : bool
+  +is_paused : bool
+  +last_pipe : PipeGenerator
+  +pipe_total_width : NoneType
+  +running : bool
+  
+  +generate_pipes()
+  +handle_events()
+  +increment_counter()
+  +initialize_assets()
+  +play()
+  +quit()
+  +restart()
+}
+class "LowerPipe" as models.LowerPipe.LowerPipe {
+  +y : int
+}
+class "Pipe" as models.Pipe.Pipe {
+  +height : int
+  +pipe_end : int
+  +pipe_mid : int
+  +velocity : int
+  +x : int
+  +y : int
+  +draw(window)
+  +get_height()
+  +get_masks()
+  +get_position()
+  +get_width()
+  +get_x()
+  +get_y()
+}
+class "PipeGenerator" as models.PipeGenerator.PipeGenerator {
+  +gap : int
+  +gravity : int
+  +height : int
+  +lower_pipe : LowerPipe
+  +lower_pipe_height : int
+  +pipe_end_rec : tuple
+  +pipe_end_texture : img
+  +pipe_end_texture : img
+  +pipe_mid_rec : tuple
+  +pipe_mid_texture : img
+  +pipe_mid_texture : img
+  +upper_pipe : UpperPipe
+  +upper_pipe_height : int
+  +draw(screen)
+  +get_masks()y
+  +get_positions()
+  +get_width()
+  +get_x()
+  +is_visible()
+  +recycle(x)
+}
+class "Score" as models.Score.Score {
+  +font : Font
+  +margin : int
+  +score_surface : Surface
+  +value : int
+  +draw(window)
+  +get_score()
+  +increment()
+  +reset()
+}
+class "UpperPipe" as models.UpperPipe.UpperPipe {
+  +pipe_end_y: int
+  +x : int
+  +draw(window)
+}
+class "View" as View.View {
+  +window : pygame.display
+  +get_window()
+}
+models.PipeGenerator.PipeGenerator --* controller.Controller : PIPES_ARRAY
+models.LowerPipe.LowerPipe --|> models.Pipe.Pipe
+models.UpperPipe.UpperPipe --|> models.Pipe.Pipe
+View.View --* controller.Controller : VIEW
+models.Bird.Bird --* controller.Controller : PLAYER_CHARACTER
+models.LowerPipe.LowerPipe --* models.PipeGenerator.PipeGenerator : lower_pipe
+models.Score.Score --* controller.Controller : SCORE
+models.UpperPipe.UpperPipe --* models.PipeGenerator.PipeGenerator : upper_pipe
+@enduml
