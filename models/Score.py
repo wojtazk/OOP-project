@@ -12,6 +12,12 @@ class Score:
     def __add__(self, value):
         self.value += value
 
+    def __lshift__(self, other):
+        return self.value << other
+
+    def __del__(self):
+        del self.margin, self.value, self.font, self.score_surface
+
     def draw(self, window):
         self.score_surface = self.font.render(str(self.value), True, 'black')
 

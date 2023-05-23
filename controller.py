@@ -11,6 +11,7 @@ from models.Score import Score
 class Controller:
     def __init__(self):
         # config
+        self.VIEW = None
         self.WIDTH = 1280 / 1.3
         self.HEIGHT = 720 / 1.3
 
@@ -49,8 +50,8 @@ class Controller:
 
         # initialize view
         flags = DOUBLEBUF
-        view = View(self.WIDTH, self.HEIGHT, flags, self.CAPTION, self.GAME_ICON, None)
-        window = view.get_window()  # get window
+        self.VIEW = View(self.WIDTH, self.HEIGHT, flags, self.CAPTION, self.GAME_ICON, None)
+        window = self.VIEW.get_window()  # get window
 
         self.BG_IMG = self.BG_IMG.convert_alpha()  # convert bg
 
@@ -103,6 +104,7 @@ class Controller:
                     self.SCORE.increment()
                     # noinspection PyStatementEffect
                     # self.SCORE + 1
+                    # print(self.SCORE << 1)
 
                 # checking for collisions with player_character
                 if self.PLAYER_CHARACTER.check_for_collision(pipe):

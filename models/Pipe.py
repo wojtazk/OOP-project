@@ -1,7 +1,8 @@
 import pygame
+from abc import ABC  # for abstract classes
 
 
-class Pipe:
+class Pipe(ABC):
     def __init__(self, x, y, gravity, height, pipe_mid, pipe_end):
         self.height = height
 
