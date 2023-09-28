@@ -14,7 +14,7 @@ class Controller:
         self.WIDTH = 1280 / 1.3
         self.HEIGHT = 720 / 1.3
 
-        self.FPS_LIMIT = 60
+        self.FPS_LIMIT = 144
 
         # gravity
         self.GRAVITY = 1
@@ -57,7 +57,7 @@ class Controller:
         # game clock
         clock = pygame.time.Clock()
         # noinspection PyUnusedLocal
-        dt = 0  # delta time
+        # dt = 0  # delta time
 
         # initialize player_character, pipes and background
         self.initialize_assets()
@@ -65,6 +65,13 @@ class Controller:
 
         self.running = True
         while self.running:
+            # limit FPS
+            # dt is delta time in seconds since last frame, used for frame-rate-independent physics.
+            dt = clock.tick(self.FPS_LIMIT) / 1000  # divide by 1000 to convert to seconds
+            # clock.tick(self.FPS_LIMIT)  # set tick
+            # 60 / fps -> adjusting physics to behave the same as on 60fps
+            dt += 60 / (clock.get_fps() or 60)  # or 60 -> div 0 fail safe
+
             # events (keyboard / mouse inputs)
             self.handle_events()
 
@@ -82,19 +89,19 @@ class Controller:
                 pygame.display.update()
                 continue
 
-            # increment counter on every tick
-            self.increment_counter()
+            # increment counter on every tick, adjusted with dt
+            self.increment_counter(dt)
 
             # bird animation
-            self.PLAYER_CHARACTER.animate_wings(self.counter)
+            self.PLAYER_CHARACTER.animate_wings(int(self.counter))  # rounding timer because it will be list's index
 
             # render bird
-            self.PLAYER_CHARACTER.draw(window)
+            self.PLAYER_CHARACTER.draw(window, dt)
 
             # render Pipes
             for pipe in self.PIPES_ARRAY:
                 if pipe.is_visible():
-                    pipe.draw(window)
+                    pipe.draw(window, dt)
                 else:
                     pipe.recycle(self.last_pipe.get_x() + self.pipe_total_width)
                     self.last_pipe = pipe
@@ -119,10 +126,9 @@ class Controller:
             # render score
             self.SCORE.draw(window)
 
-            # limit FPS
-            # dt is delta time in seconds since last frame, used for frame-rate-independent physics.
-            # dt = clock.tick(self.FPS_LIMIT) / 1000  # divide by 1000 to convert to seconds
-            clock.tick(self.FPS_LIMIT)  # set tick
+            # print fps and dt
+            # print(f'fps: {clock.get_fps()}')
+            # print(f'delta time: {dt}')
 
             # update the display
             pygame.display.update()
@@ -196,8 +202,8 @@ class Controller:
                         self.game_over = False
                     return
 
-    def increment_counter(self):
-        self.counter += 1
+    def increment_counter(self, dt):
+        self.counter += dt  # incrementing with dt helps with bird's wing animation (normalizing their speed)
         # reset counter if it exceeds FPS_LIMIT
         if self.counter > self.FPS_LIMIT:
             self.counter = 0

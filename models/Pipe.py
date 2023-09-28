@@ -40,8 +40,8 @@ class Pipe:
     def get_y(self):
         return self.y
 
-    def draw(self, window):
-        self.x -= self.velocity  # subtract velocity from x coordinate to make the pipe move
+    def draw(self, window, dt):
+        self.x -= self.velocity * dt  # subtract velocity from x coordinate to make the pipe move
 
         pos = self.get_position()
         window.blit(self.pipe_mid, pos)

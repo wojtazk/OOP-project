@@ -13,7 +13,7 @@ executables = [cx_Freeze.Executable("main.py", base="Win32GUI", icon="images/duc
 
 cx_Freeze.setup(
     name="Bird Jumper",
-    version="1.0",
+    version="1.1",
     description="A Flappy Bird rip-off",
     options={
         "build_exe": {

@@ -33,9 +33,9 @@ class PipeGenerator:
         self.lower_pipe = LowerPipe(x, window_height, gravity, self.lower_pipe_height,
                                     self.pipe_mid_texture, self.pipe_end_texture)
 
-    def draw(self, screen):
-        self.upper_pipe.draw(screen)
-        self.lower_pipe.draw(screen)
+    def draw(self, screen, dt):
+        self.upper_pipe.draw(screen, dt)
+        self.lower_pipe.draw(screen, dt)
 
     def get_width(self):
         return self.pipe_end_texture.get_width()
