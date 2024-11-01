@@ -12,6 +12,10 @@
 
 This project uses [pygame](https://www.pygame.org/news) (cross-platform set of Python modules designed for writing video games ~ [wikipedia.org](https://en.wikipedia.org/wiki/Pygame))
 
+<br>
+
+[Download](https://github.com/wojtazk/OOP-project/releases)
+
 <!-- ![image](https://user-images.githubusercontent.com/48928433/226203592-3beea120-9233-46dc-bb2f-39da9fa5ae79.png) -->
 ![image](https://github.com/wojtazk/programowanie-obiektowe-projekt/assets/48928433/e76369eb-0135-45b1-82de-a272c6c11b5a)
 
